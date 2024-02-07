@@ -1,16 +1,51 @@
 ---
+import Layout from "@layouts/layout.astro";
 
+const projects = [
+    {
+        title: "year of code",
+        description: "Literally this website",
+    },
+    {
+        title: "cave",
+        description:
+            "Funky, procedurally generated atmospheric cave exploration game.",
+    },
+    {
+        title: "untitled website",
+        description: "The homepage of the Obeya",
+    },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+    <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black"></div>
+    <p>projects</p>
+    <ul class="pointer-events-auto grid grid-flow-row auto-rows-fr gap-y-2">
+        {
+            projects.map((project) => (
+                <li class="grid gap-x-4 grid-flow-col grid-cols-10">
+                    <h1 id="project" class="col-start-2 col-end-7">
+                        {project.title}
+                    </h1>
+                    <p class="col-start-7 col-end-10">{project.description}</p>
+                </li>
+            ))
+        }
+    </ul>
+    <h1 id="header"></h1>
+</Layout>
+
+<script>
+    let selectedProject = null;
+    let header = document.querySelector("#header")!;
+    console.log(header);
+
+    let projects = document.querySelectorAll("#project");
+    for (let project of projects) {
+        project.addEventListener("mouseenter", (ev) => {
+            selectedProject = project;
+            header.innerHTML = selectedProject.innerHTML;
+        });
+    }
+</script>
