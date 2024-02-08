@@ -29,9 +29,14 @@ const projects = [
                         id="project"
                         class="py-6 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
                     >
+                        <img
+                            class="z-30 absolute top-0 left-0 origin-center ease-in-out transition-all duration-75"
+                            id="blaster"
+                            src="gaster_blaster.png"
+                        />
                         <div
                             id="anime"
-                            class="flex items-center justify-start z-20 w-full top-[50%] absolute h-0 bg-white transition-all duration-300 ease-in-out overflow-hidden"
+                            class="flex items-center justify-start z-20 w-full top-[50%] absolute h-0 bg-white transition-all duration-150 ease-in-out overflow-hidden"
                         >
                             <div class="px-4 py-2 grid grid-cols-10 items-center w-full">
                                 <h1 class="text-black col-start-2 col-end-7">
@@ -53,59 +58,100 @@ const projects = [
             ))
         }
     </ul>
-    <img
+    <!-- <img
         class="z-20 absolute left-0 origin-center -translate-y-1/2 scale-150 ease-in-out transition-all duration-75"
         id="blaster"
         src="gaster_blaster.png"
-    />
+    /> -->
 </Layout>
 
 <style>
-    @keyframes gaster_blaster {
+    @keyframes gaster_blaster_enter {
         0% {
-            transform: translateX(-80%) translateY(-50%) scale(1.5);
+            transform: translateX(-80%) scale(1.25) translateY(6.25%);
         }
         100% {
-            transform: translateX(-25%) translateY(-50%) scale(1.25);
+            transform: translateX(-25%) scale(1.25) translateY(6.25%);
+            background-image: url("gaster_blaster.png");
         }
     }
 
-    .gaster_blaster_anim {
-        animation: gaster_blaster 0.2s ease-in-out forwards;
+    @keyframes gaster_blaster_exit {
+        0% {
+            transform: translateX(-25%) scale(1.25) translateY(6.25%);
+        }
+        100% {
+            transform: translateX(-150%) scale(1.25) translateY(6.25%);
+        }
+    }
+
+    @keyframes gaster_blaster_shot_enter {
+        0% {
+        }
+        100% {
+        }
+    }
+
+    @keyframes gaster_blaster_shot_exit {
+        0% {
+        }
+        100% {
+        }
+    }
+
+    .gaster_blaster_enter {
+        animation: gaster_blaster_enter 0.1s ease-in-out forwards;
+    }
+
+    .gaster_blaster_exit {
+        animation: gaster_blaster_exit 0.2s ease-in-out forwards;
+    }
+
+    .gaster_blaster_shot_enter {
+        animation: gaster_blaster_shot_enter 0.1s ease-in-out forwards;
+    }
+
+    .gaster_blaster_shot_exit {
+        animation: gaster_blaster_shot_exit 0.2s ease-in-out forwards;
     }
 </style>
 
 <script>
     let selectionCount = 0;
-    let blaster: HTMLElement = document.querySelector("#blaster")!;
+    // let blaster: HTMLElement = document.querySelector("#blaster")!;
 
     function handleElement(element: Element, select: boolean) {
         let bg = element.querySelector("#anime")!;
         const bgSelected = "h-full top-0".split(" ");
         const bgDeselected = "h-0 top-[50%]".split(" ");
+
+        const blaster: HTMLElement = element.querySelector("#blaster")!;
         if (select) {
             selectionCount += 1;
             bg.classList.add(...bgSelected);
             bg.classList.remove(...bgDeselected);
-            blaster.classList.remove("gaster_blaster_anim");
+            blaster.classList.remove("gaster_blaster_exit");
+            blaster.classList.remove("gaster_blaster_enter");
             void blaster.offsetWidth;
-            blaster.classList.add("gaster_blaster_anim");
+            blaster.classList.add("gaster_blaster_enter");
         } else {
             selectionCount -= 1;
             bg.classList.remove(...bgSelected);
             bg.classList.add(...bgDeselected);
-            blaster.classList.remove("gaster_blaster_anim");
+            blaster.classList.remove("gaster_blaster_enter");
+            blaster.classList.add("gaster_blaster_exit");
         }
 
-        blaster.style.display = selectionCount === 0 ? "none" : "inline";
+        // blaster.style.display = selectionCount === 0 ? "none" : "inline";
     }
 
     let projects = document.querySelectorAll("#project");
     for (let project of projects) {
+        handleElement(project, false);
         project.addEventListener("mouseenter", (_) => {
             handleElement(project, true);
-            const rect = project.getBoundingClientRect();
-            blaster.style.top = `${rect.y + rect.height / 2}px`;
+            // const rect = project.getBoundingClientRect();
+            // blaster.style.top = `${rect.y + rect.height / 2}px`;
         });
         project.addEventListener("mouseleave", (_) =>
             handleElement(project, false),
