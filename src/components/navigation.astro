@@ -15,31 +15,57 @@ const links = [
     <ul
         class="rounded-2xl px-8 py-4 col-start-2 col-end-10 bg-white drop-shadow-2xl grid grid-flow-col auto-cols-fr items-center"
     >
-        <li id="links" class="flex gap-16">
-            {
-                links.map((link) => (
-                    <a class="text-gray-300" href={link.path}>
-                        {link.name}
-                    </a>
-                ))
-            }
-        </li>
-        <li class="place-self-center">
-            <h1>Year of Code</h1>
-            <h2>by Calcopod</h2>
-        </li>
-        <li class="place-self-end">
-            <button>
+        <li id="links" class="">
+            <div class="md:hidden">
                 <svg
+                    class="scale-150"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    height="16"
+                    ><path
+                        d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"
+                        fill="#000000"></path></svg
+                >
+            </div>
+            <div class="hidden md:flex gap-[3vw]">
+                {
+                    links.map((link) => (
+                        <a class="text-gray-500" href={link.path}>
+                            {link.name}
+                        </a>
+                    ))
+                }
+            </div>
+        </li>
+        <li class="md:place-self-center place-self-end text-center">
+            <h1
+                class="scroll-m-20 m-0 text-2xl font-black tracking-tight text-black"
+            >
+                Year of Code
+            </h1>
+            <h2 class="leading-7 text-black text-sm -mt-2">by Calcopod</h2>
+        </li>
+        <li
+            class="hidden md:block place-self-end min-w-24 md:min-w-32 lg:min-w-48 w-[8vw] self-center"
+        >
+            <button
+                class="px-8 py-4 bg-black rounded-2xl w-full text-white flex justify-center items-center gap-2"
+            >
+                <svg
+                    class="scale-150 hidden lg:inline"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
                     width="16"
                     height="16"
                     ><path
                         d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
-                    ></path></svg
+                        fill="#ffffff"></path></svg
                 >
-                <span>github</span>
+                <span
+                    class="uppercase scroll-m-20 text-lg font-bold tracking-tight"
+                    >github</span
+                >
             </button>
         </li>
     </ul>
@@ -49,6 +75,18 @@ const links = [
     const currUrl = window.location.href;
     const navLinks = document.querySelector("#links")!.querySelectorAll("a")!;
     for (const link of navLinks) {
-        if (link.href === currUrl) link.classList.add("text-gray-900");
+        const activeClass =
+            "text-black scroll-m-20 text-lg font-bold tracking-tight".split(
+                " ",
+            );
+        const inactiveClass =
+            "text-gray-400 scroll-m-20 text-lg font-light tracking-tight".split(
+                " ",
+            );
+        if (link.href === currUrl) {
+            link.classList.add(...activeClass);
+        } else {
+            link.classList.add(...inactiveClass);
+        }
     }
 </script>

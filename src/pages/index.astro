@@ -19,16 +19,33 @@ const projects = [
 ---
 
 <Layout>
-    <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black"></div>
-    <p>projects</p>
-    <ul class="pointer-events-auto grid grid-flow-row auto-rows-fr gap-y-2">
+    <div class="absolute top-0 left-0 w-full h-full -z-10 bg-black"></div>
+    <p class="text-white ml-[calc(10vw)]">projects</p>
+    <ul
+        class="text-white pointer-events-auto grid grid-flow-row auto-rows-fr gap-y-4"
+    >
         {
             projects.map((project) => (
-                <li class="grid gap-x-4 grid-flow-col grid-cols-10">
-                    <h1 id="project" class="col-start-2 col-end-7">
-                        {project.title}
-                    </h1>
-                    <p class="col-start-7 col-end-10">{project.description}</p>
+                <li
+                    id="project"
+                    class="relative grid gap-x-4 grid-flow-col grid-cols-10 px-4 py-2"
+                >
+                    <div
+                        id="anime"
+                        class="z-20 ml-[10vw] w-[80vw] top-[50%] absolute h-0 bg-black transition-all duration-300 ease-in-out"
+                    />
+
+                    <div class="relative col-start-2 col-end-7 text-4xl font-extrabold tracking-tight lg:text-6xl uppercase">
+                        <h1 id="primary-text" class="z-0">
+                            {project.title}
+                        </h1>
+                        <h1 id="secondary-text" class="z-10 absolute hidden">
+                            OPPOSITE DAY
+                        </h1>
+                    </div>
+                    <p id="description" class="col-start-7 col-end-10 hidden">
+                        {project.description}
+                    </p>
                 </li>
             ))
         }
@@ -37,15 +54,39 @@ const projects = [
 </Layout>
 
 <script>
-    let selectedProject = null;
-    let header = document.querySelector("#header")!;
-    console.log(header);
+    function handleElement(element: Element, select: boolean) {
+        let bg = element.querySelector("#anime")!;
+        const bgSelected = "h-full top-0".split(" ");
+        const bgDeselected = "h-0 top-[50%]".split(" ");
+        const textSelected = "".split(" ");
+        const textDeselected = "hidden".split(" ");
+
+        let primary = element.querySelector("#primary-text")!;
+        let secondary = element.querySelector("#secondary-text")!;
+        if (select) {
+            bg.classList.add(...bgSelected);
+            bg.classList.remove(...bgDeselected);
+            // secondary.classList.add(...textSelected);
+            // secondary.classList.remove(...textDeselected);
+            // primary.classList.remove(...textSelected);
+            // primary.classList.add(...textDeselected);
+        } else {
+            bg.classList.remove(...bgSelected);
+            bg.classList.add(...bgDeselected);
+            // secondary.classList.remove(...textSelected);
+            // secondary.classList.add(...textDeselected);
+            // primary.classList.add(...textSelected);
+            // primary.classList.remove(...textDeselected);
+        }
+    }
 
     let projects = document.querySelectorAll("#project");
     for (let project of projects) {
-        project.addEventListener("mouseenter", (ev) => {
-            selectedProject = project;
-            header.innerHTML = selectedProject.innerHTML;
-        });
+        project.addEventListener("mouseenter", (_) =>
+            handleElement(project, true),
+        );
+        project.addEventListener("mouseleave", (_) =>
+            handleElement(project, false),
+        );
     }
 </script>
