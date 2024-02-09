@@ -18,10 +18,6 @@ const projects = [
 ---
 
 <Layout>
-    <div
-        class="absolute top-0 left-0 w-full h-full -z-10 dark:bg-black bg-white"
-    >
-    </div>
     <p
         class="text-white ml-[calc(10vw)] leading-7 text-sm uppercase tracking-[0.4em] mb-2 font-bold"
     >
@@ -142,6 +138,26 @@ const projects = [
 </style>
 
 <script>
+    const cameraShake = (length: number, strength: number, time: number) => {
+        const body: HTMLElement = document.querySelector("#screenshaker")!;
+
+        let shouldRun = true;
+        body.classList.add(
+            ..."transition-all ease-in-out duration-75".split(" "),
+        );
+        setTimeout(() => {
+            shouldRun = false;
+            body.style.transform = "translateX(0%) translateY(0%)";
+        }, length * 1000);
+        let intervalId = setInterval(() => {
+            if (!shouldRun) clearInterval(intervalId);
+
+            const trX = (Math.random() - 0.5) * 2 * strength;
+            const trY = (Math.random() - 0.5) * 2 * strength;
+            body.style.transform = `translateX(${trX}px) translateY(${trY}px)`;
+        }, time * 1000);
+    };
+
     let selectionCount = 0;
 
     function handleElement(element: Element, select: boolean) {
@@ -158,6 +174,7 @@ const projects = [
             bg.classList.remove("gaster_blaster_shot_enter");
             void bg.offsetWidth;
             bg.classList.add("gaster_blaster_shot_enter");
+            cameraShake(0.2, 10, 0.05);
         } else {
             selectionCount -= 1;
             blaster.classList.remove("gaster_blaster_enter");

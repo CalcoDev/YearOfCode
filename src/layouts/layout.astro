@@ -14,9 +14,13 @@ import Navigation from "@components/navigation.astro";
             rel="stylesheet"
         /><title>Year of Code</title>
     </head>
-    <body class="dark">
+    <body class="dark overflow-hidden">
         <Navigation />
-        <div class="mt-[calc(2rem+5rem+2rem+10rem)]">
+        <div
+            class="absolute top-0 left-0 w-full h-full -z-10 dark:bg-black bg-white"
+        >
+        </div>
+        <div id="screenshaker" class="mt-[calc(2rem+5rem+2rem+10rem)]">
             <slot />
         </div>
     </body>
