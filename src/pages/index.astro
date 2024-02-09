@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/layout.astro";
-
+import Project from "@components/project.astro";
 import projects from "@data/projects.ts";
 ---
 
@@ -20,56 +20,14 @@ import projects from "@data/projects.ts";
                     <li>
                         <hr class="dark:bg-gray-500 bg-gray-800" />
                     </li>
-                    <li
-                        id="project"
-                        class="py-6 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
-                    >
-                        <div
-                            class="z-30 absolute top-0 left-0 origin-center h-full"
-                            id="blaster"
-                        >
-                            <img
-                                alt="Gaster blaster shot"
-                                class="max-h-full h-auto object-contain aspect-auto"
-                                src="gaster_blaster.png"
-                            />
-                        </div>
-                        <div
-                            id="anime"
-                            class="dark:text-black text-white flex items-center justify-start z-20 w-full top-0 left-0 origin-center absolute dark:bg-white bg-black overflow-hidden"
-                        >
-                            <div class="px-4 py-2 grid grid-cols-10 items-center w-full">
-                                <h1 class="opacity-20 col-start-1 col-end-2 justify-self-end mr-10">
-                                    {idx + 1}
-                                </h1>
-                                <h1 class="col-start-2 col-end-7">
-                                    {project.title}
-                                </h1>
-                                <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight col-start-7 col-end-10">
-                                    {project.description}
-                                </h3>
-                            </div>
-                        </div>
-
-                        <div class="absolute top-0 left-0 w-full h-full px-4 py-2 grid grid-cols-10 items-center">
-                            <h1 class="opacity-20 col-start-1 col-end-2 justify-self-end mr-10">
-                                {idx + 1}
-                            </h1>
-                        </div>
-
-                        <div class="px-4 py-2 grid grid-cols-10 items-center">
-                            <h1 class="col-start-2 col-end-7">
-                                {project.title}
-                            </h1>
-                        </div>
-                    </li>
+                    <Project idx={idx} project={project} />
                 </>
             ))
         }
     </ul>
 </Layout>
 
-<style>
+<style is:global>
     @keyframes gaster_blaster_enter {
         0% {
             transform: translateX(-80%) scale(1.25) translateY(6.25%);
@@ -162,11 +120,7 @@ import projects from "@data/projects.ts";
 
     let selectionCount = 0;
 
-    function handleElement(
-        element: Element,
-        select: boolean,
-        audio: HTMLAudioElement | null,
-    ) {
+    function handleElement(element: Element, select: boolean) {
         let bg: HTMLElement = element.querySelector("#anime")!;
         const blaster: HTMLElement = element.querySelector("#blaster")!;
 
@@ -182,9 +136,6 @@ import projects from "@data/projects.ts";
             void bg.offsetWidth;
             bg.classList.add("gaster_blaster_shot_enter");
             cameraShake(0.2, 10, 0.05);
-
-            audio!.currentTime = 0;
-            audio!.play();
         } else {
             selectionCount -= 1;
             blaster.classList.remove("gaster_blaster_enter");
@@ -196,13 +147,18 @@ import projects from "@data/projects.ts";
     }
 
     let projects = document.querySelectorAll("#project");
+    console.log(projects);
     for (let project of projects) {
-        handleElement(project, false, null);
+        handleElement(project, false);
         project.addEventListener("mouseenter", (_) => {
-            handleElement(project, true, null);
+            handleElement(project, true);
         });
         project.addEventListener("mouseleave", (_) =>
-            handleElement(project, false, null),
+            handleElement(project, false),
         );
     }
+</script>
+
+<script>
+    console.log("ASDASDASD");
 </script>
