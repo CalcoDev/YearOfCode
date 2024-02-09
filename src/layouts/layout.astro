@@ -14,13 +14,13 @@ import Navigation from "@components/navigation.astro";
             rel="stylesheet"
         /><title>Year of Code</title>
     </head>
-    <body class="dark overflow-hidden">
+    <body class="dark overflow-x-hidden">
         <Navigation />
         <div
-            class="absolute top-0 left-0 w-full h-full -z-10 dark:bg-black bg-white"
+            class="fixed top-0 left-0 w-full pt-[19rem] h-screen -z-10 dark:bg-black bg-white transition-colors ease-in-out duration-150"
         >
         </div>
-        <div id="screenshaker" class="mt-[calc(2rem+5rem+2rem+10rem)]">
+        <div class="pt-[calc(2rem+5rem+2rem+10rem)]">
             <slot />
         </div>
     </body>

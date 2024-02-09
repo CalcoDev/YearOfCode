@@ -14,20 +14,47 @@ const projects = [
         title: "untitled website",
         description: "The homepage of the Obeya",
     },
+    {
+        title: "year of code",
+        description: "Literally this website",
+    },
+    {
+        title: "cave",
+        description: "Funky,  game.",
+    },
+    {
+        title: "untitled website",
+        description: "The homepage of the Obeya",
+    },
+    {
+        title: "year of code",
+        description: "Literally this website",
+    },
+    {
+        title: "cave",
+        description: "Funky,  game.",
+    },
+    {
+        title: "untitled website",
+        description: "The homepage of the Obeya",
+    },
 ];
 ---
 
 <Layout>
     <p
-        class="text-white ml-[calc(10vw)] leading-7 text-sm uppercase tracking-[0.4em] mb-2 font-bold"
+        class="dark:text-white text-black ml-[calc(10vw)] leading-7 text-sm uppercase tracking-[0.4em] mb-2 font-bold"
     >
         projects
     </p>
-    <ul class="text-white select-none grid grid-flow-row">
+    <ul
+        id="screenshaker"
+        class="dark:text-white text-black select-none grid grid-flow-row"
+    >
         {
             projects.map((project) => (
                 <>
-                    <hr class="" />
+                    <hr class="dark:bg-gray-500 bg-gray-800" />
                     <li
                         id="project"
                         class="py-6 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
@@ -43,13 +70,13 @@ const projects = [
                         </div>
                         <div
                             id="anime"
-                            class="flex items-center justify-start z-20 w-full top-0 left-0 origin-center absolute bg-white overflow-hidden"
+                            class="dark:text-black text-white flex items-center justify-start z-20 w-full top-0 left-0 origin-center absolute dark:bg-white bg-black overflow-hidden"
                         >
                             <div class="px-4 py-2 grid grid-cols-10 items-center w-full">
-                                <h1 class="text-black col-start-2 col-end-7">
+                                <h1 class="col-start-2 col-end-7">
                                     {project.title}
                                 </h1>
-                                <h3 class="text-black scroll-m-20 text-2xl font-semibold tracking-tight col-start-7 col-end-10">
+                                <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight col-start-7 col-end-10">
                                     {project.description}
                                 </h3>
                             </div>
