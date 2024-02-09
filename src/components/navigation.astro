@@ -1,4 +1,6 @@
 ---
+import ThemeSwitch from "@components/theme_switch.astro";
+
 const links = [
     {
         name: "projects",
@@ -13,22 +15,39 @@ const links = [
 
 <nav class="fixed z-40 top-0 sm:top-8 w-screen grid grid-cols-10">
     <ul
-        class="sm:rounded-2xl px-8 py-4 col-start-1 col-end-11 sm:col-start-2 sm:col-end-10 dark:bg-white bg-black dark:text-black text-white drop-shadow-2xl grid grid-flow-col auto-cols-fr items-center"
+        class="sm:rounded-2xl px-8 py-4 col-start-1 col-end-11 sm:col-start-2 sm:col-end-10 dark:bg-white bg-black dark:text-black text-white drop-shadow-2xl grid grid-flow-col grid-cols-[(1fr,2fr)] sm:auto-cols-fr items-center"
     >
         <li id="links">
             <div
-                class="md:hidden transition-all duration-150 ease-in-out hover:scale-125 w-fit hover:cursor-pointer active:scale-95"
+                id="hamburger_menu"
+                class="select-none xs:hidden transition-all duration-150 ease-in-out hover:scale-125 w-fit hover:cursor-pointer active:scale-95"
             >
-                <img
-                    class="scale-150 dark:block hidden"
-                    src="icons/burger_dark.svg"
-                />
-                <img
-                    class="scale-150 dark:hidden block"
-                    src="icons/burger.svg"
-                />
+                <div class="dark:block hidden">
+                    <img
+                        id="hamburger_open"
+                        class="scale-150"
+                        src="icons/burger_close_dark.svg"
+                    />
+                    <img
+                        id="hamburger_closed"
+                        class="scale-150"
+                        src="icons/burger_dark.svg"
+                    />
+                </div>
+                <div class="block dark:hidden">
+                    <img
+                        id="hamburger_open"
+                        class="scale-150"
+                        src="icons/burger_close.svg"
+                    />
+                    <img
+                        id="hamburger_closed"
+                        class="scale-150"
+                        src="icons/burger.svg"
+                    />
+                </div>
             </div>
-            <div class="hidden md:flex gap-[3vw]">
+            <div class="hidden xs:flex gap-[min(2vw,1rem)]">
                 {
                     links.map((link) => (
                         <a class="text-gray-500" href={link.path}>
@@ -38,47 +57,21 @@ const links = [
                 }
             </div>
         </li>
-        <li class="md:place-self-center place-self-end text-center">
-            <h1 class="scroll-m-20 m-0 text-2xl font-black tracking-tight">
-                Year of Code
-            </h1>
-            <h2 class="leading-7 text-sm -mt-2">by Calcopod</h2>
+        <li class="md:place-self-center place-self-end flex items-center">
+            <div class="block sm:hidden">
+                <ThemeSwitch />
+            </div>
+            <div class="text-center">
+                <h1 class="scroll-m-20 m-0 text-2xl font-black tracking-tight">
+                    Year of Code
+                </h1>
+                <h2 class="leading-7 text-sm -mt-2">by Calcopod</h2>
+            </div>
         </li>
         <li
-            class="hidden md:flex place-self-end w-full self-center items-center justify-end gap-x-4"
+            class="hidden sm:flex place-self-end w-full self-center items-center justify-end gap-x-1 md:gap-x-2"
         >
-            <div
-                class="rounded-full h-full dark:bg-white dark:hover:bg-black
-                bg-black hover:bg-white
-                active:scale-95 hover: transition-all duration-200 ease-in-out
-                hover:cursor-pointer"
-                id="theme_toggle_div"
-            >
-                <div class="dark:hidden">
-                    <img
-                        id="theme_toggle_light"
-                        class="scale-150 h-full p-2"
-                        src="icons/moon.svg"
-                    />
-                    <img
-                        id="theme_toggle_dark"
-                        class="scale-150 h-full p-2"
-                        src="icons/moon_dark.svg"
-                    />
-                </div>
-                <div class="hidden dark:block">
-                    <img
-                        id="theme_toggle_light"
-                        class="scale-150 h-full p-2"
-                        src="icons/sun.svg"
-                    />
-                    <img
-                        id="theme_toggle_dark"
-                        class="scale-150 h-full p-2"
-                        src="icons/sun_dark.svg"
-                    />
-                </div>
-            </div>
+            <ThemeSwitch />
             <button
                 class="px-8 py-4 dark:bg-black bg-white rounded-2xl min-w-24 md:min-w-32 lg:min-w-48 w-[3vw] dark:text-white text-black flex justify-center items-center gap-2"
             >
@@ -95,9 +88,82 @@ const links = [
             </button>
         </li>
     </ul>
+    <div
+        class="dark:bg-black bg-white col-start-1 col-end-11 overflow-hidden"
+        id="hamburger_dropdown"
+    >
+        <div class="pt-8 flex flex-col gap-[max(2vh,0.2rem)]">
+            {
+                links.map((link) => (
+                    <a
+                        class="dark:text-white text-black py-2 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
+                        href={link.path}
+                    >
+                        {link.name}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
 </nav>
 
+<style>
+    @keyframes hamburger_menu_dropdown {
+        0% {
+            height: 0;
+        }
+        100% {
+            height: 100vh;
+        }
+    }
+
+    @keyframes hamburger_menu_dropdown_exit {
+        0% {
+            height: 100vh;
+        }
+        100% {
+            height: 0;
+        }
+    }
+
+    .hamburger_dropdown_enter {
+        animation: hamburger_menu_dropdown 0.2s ease-in-out forwards;
+    }
+
+    .hamburger_dropdown_exit {
+        animation: hamburger_menu_dropdown_exit 0.2s ease-in-out forwards;
+    }
+</style>
+
 <script>
+    let isHamburgerOpen = false;
+    const hamburgerMenu = document.querySelector("#hamburger_menu")!;
+    const hamburgerMenuOpen = hamburgerMenu.querySelectorAll("#hamburger_open");
+    const hamburgerMenuClosed =
+        hamburgerMenu.querySelectorAll("#hamburger_closed");
+    const hamburgerMenuDropdown = document.querySelector(
+        "#hamburger_dropdown",
+    )!;
+    const toggleHamburgerMenu = () => {
+        isHamburgerOpen = !isHamburgerOpen;
+        handleHamburgerMenu(isHamburgerOpen);
+    };
+    const handleHamburgerMenu = (isOpen: boolean) => {
+        if (isOpen) {
+            hamburgerMenuOpen.forEach((h) => h.classList.remove("hidden"));
+            hamburgerMenuClosed.forEach((h) => h.classList.add("hidden"));
+            hamburgerMenuDropdown.classList.remove("hamburger_dropdown_exit");
+            hamburgerMenuDropdown.classList.add("hamburger_dropdown_enter");
+        } else {
+            hamburgerMenuClosed.forEach((h) => h.classList.remove("hidden"));
+            hamburgerMenuOpen.forEach((h) => h.classList.add("hidden"));
+            hamburgerMenuDropdown.classList.add("hamburger_dropdown_exit");
+            hamburgerMenuDropdown.classList.remove("hamburger_dropdown_enter");
+        }
+    };
+    hamburgerMenu.addEventListener("click", (_) => toggleHamburgerMenu());
+    handleHamburgerMenu(isHamburgerOpen);
+
     const isDarkTheme = () => {
         const elem = document.querySelector(".dark");
         return { elem, isDark: elem != null };
@@ -127,14 +193,19 @@ const links = [
         }
     };
 
-    const themeToggleDiv: HTMLElement =
-        document.querySelector("#theme_toggle_div")!;
-    themeToggleDiv.addEventListener("click", (_) => toggleDarkTheme());
-    themeToggleDiv.addEventListener("mouseenter", (_) =>
-        toggleThemeSwitchButton(!isDarkTheme().isDark),
+    const themeToggleDivs = document.querySelectorAll("#theme_toggle_div")!;
+    themeToggleDivs.forEach((div) =>
+        div.addEventListener("click", (_) => toggleDarkTheme()),
     );
-    themeToggleDiv.addEventListener("mouseleave", (_) =>
-        toggleThemeSwitchButton(isDarkTheme().isDark),
+    themeToggleDivs.forEach((div) =>
+        div.addEventListener("mouseenter", (_) =>
+            toggleThemeSwitchButton(!isDarkTheme().isDark),
+        ),
+    );
+    themeToggleDivs.forEach((div) =>
+        div.addEventListener("mouseleave", (_) =>
+            toggleThemeSwitchButton(isDarkTheme().isDark),
+        ),
     );
     toggleDarkTheme();
     toggleDarkTheme();

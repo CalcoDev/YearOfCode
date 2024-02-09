@@ -6,7 +6,11 @@ export default {
 		fontFamily: {
 			'sans': ["Inter", "ui-sans-serif"],
 		},
-		extend: {},
+		extend: {
+			screens: {
+				'xs': '475px',
+			}
+		},
 	},
 	plugins: [],
 }
