@@ -1,44 +1,7 @@
 ---
 import Layout from "@layouts/layout.astro";
 
-const projects = [
-    {
-        title: "year of code",
-        description: "Literally this website",
-    },
-    {
-        title: "cave",
-        description: "Funky,  game.",
-    },
-    {
-        title: "untitled website",
-        description: "The homepage of the Obeya",
-    },
-    {
-        title: "year of code",
-        description: "Literally this website",
-    },
-    {
-        title: "cave",
-        description: "Funky,  game.",
-    },
-    {
-        title: "untitled website",
-        description: "The homepage of the Obeya",
-    },
-    {
-        title: "year of code",
-        description: "Literally this website",
-    },
-    {
-        title: "cave",
-        description: "Funky,  game.",
-    },
-    {
-        title: "untitled website",
-        description: "The homepage of the Obeya",
-    },
-];
+import projects from "@data/projects.ts";
 ---
 
 <Layout>
@@ -54,7 +17,9 @@ const projects = [
         {
             projects.map((project, idx) => (
                 <>
-                    <hr class="dark:bg-gray-500 bg-gray-800" />
+                    <li>
+                        <hr class="dark:bg-gray-500 bg-gray-800" />
+                    </li>
                     <li
                         id="project"
                         class="py-6 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
@@ -64,6 +29,7 @@ const projects = [
                             id="blaster"
                         >
                             <img
+                                alt="Gaster blaster shot"
                                 class="max-h-full h-auto object-contain aspect-auto"
                                 src="gaster_blaster.png"
                             />
@@ -196,9 +162,14 @@ const projects = [
 
     let selectionCount = 0;
 
-    function handleElement(element: Element, select: boolean) {
+    function handleElement(
+        element: Element,
+        select: boolean,
+        audio: HTMLAudioElement | null,
+    ) {
         let bg: HTMLElement = element.querySelector("#anime")!;
         const blaster: HTMLElement = element.querySelector("#blaster")!;
+
         if (select) {
             selectionCount += 1;
             blaster.classList.remove("gaster_blaster_exit");
@@ -211,6 +182,9 @@ const projects = [
             void bg.offsetWidth;
             bg.classList.add("gaster_blaster_shot_enter");
             cameraShake(0.2, 10, 0.05);
+
+            audio!.currentTime = 0;
+            audio!.play();
         } else {
             selectionCount -= 1;
             blaster.classList.remove("gaster_blaster_enter");
@@ -223,12 +197,12 @@ const projects = [
 
     let projects = document.querySelectorAll("#project");
     for (let project of projects) {
-        handleElement(project, false);
-        project.addEventListener("mouseenter", (_) =>
-            handleElement(project, true),
-        );
+        handleElement(project, false, null);
+        project.addEventListener("mouseenter", (_) => {
+            handleElement(project, true, null);
+        });
         project.addEventListener("mouseleave", (_) =>
-            handleElement(project, false),
+            handleElement(project, false, null),
         );
     }
 </script>
