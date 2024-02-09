@@ -11,23 +11,22 @@ const links = [
 ];
 ---
 
-<nav class="absolute top-8 w-screen grid grid-cols-10">
+<nav class="fixed z-40 top-0 sm:top-8 w-screen grid grid-cols-10">
     <ul
-        class="rounded-2xl px-8 py-4 col-start-2 col-end-10 dark:bg-white bg-black dark:text-black text-white drop-shadow-2xl grid grid-flow-col auto-cols-fr items-center"
+        class="sm:rounded-2xl px-8 py-4 col-start-1 col-end-11 sm:col-start-2 sm:col-end-10 dark:bg-white bg-black dark:text-black text-white drop-shadow-2xl grid grid-flow-col auto-cols-fr items-center"
     >
-        <li id="links" class="">
-            <div class="md:hidden">
-                <!-- TODO(calco): Actually add functionality for this -->
-                <svg
-                    class="scale-150"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    width="16"
-                    height="16"
-                    ><path
-                        d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"
-                        fill="#000000"></path></svg
-                >
+        <li id="links">
+            <div
+                class="md:hidden transition-all duration-150 ease-in-out hover:scale-125 w-fit hover:cursor-pointer active:scale-95"
+            >
+                <img
+                    class="scale-150 dark:block hidden"
+                    src="icons/burger_dark.svg"
+                />
+                <img
+                    class="scale-150 dark:hidden block"
+                    src="icons/burger.svg"
+                />
             </div>
             <div class="hidden md:flex gap-[3vw]">
                 {
