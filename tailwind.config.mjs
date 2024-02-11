@@ -5,6 +5,7 @@ export default {
 	theme: {
 		fontFamily: {
 			'sans': ["Inter", "ui-sans-serif"],
+			'mono': ["DM Mono", "monospace"]
 		},
 		extend: {
 			screens: {

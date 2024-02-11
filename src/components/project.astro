@@ -17,14 +17,17 @@ const { idx, project } = Astro.props;
         id="anime"
         class="dark:text-black text-white flex items-center justify-start z-20 w-full top-0 left-0 origin-center absolute dark:bg-white bg-black overflow-hidden"
     >
-        <div class="px-4 py-2 grid grid-cols-10 items-center w-full">
+        <div class="relative px-4 py-2 grid grid-cols-10 items-center w-full">
             <h1 class="opacity-20 col-start-1 col-end-2 justify-self-end mr-10">
                 {idx + 1}
             </h1>
             <div class="col-start-2 col-end-7">
-                <h1 class="w-fit hover:cursor-pointer hover:text-blue-300">
+                <a
+                    href={project.github}
+                    class="w-fit hover:cursor-pointer hover:underline"
+                >
                     {project.title}
-                </h1>
+                </a>
             </div>
             <h3
                 class="scroll-m-20 text-2xl font-semibold tracking-tight col-start-7 col-end-10"
@@ -35,9 +38,11 @@ const { idx, project } = Astro.props;
     </div>
 
     <div
-        class="absolute top-0 left-0 w-full h-full px-4 py-2 grid grid-cols-10 items-center"
+        class="absolute top-0 left-0 w-full h-full px-4 py-2 grid grid-cols-10 grid-rows-1 items-center"
     >
-        <h1 class="opacity-20 col-start-1 col-end-2 justify-self-end mr-10">
+        <h1
+            class="opacity-20 hidden sm:block sm:col-start-1 sm:col-end-2 justify-self-end mr-10"
+        >
             {idx + 1}
         </h1>
     </div>
@@ -45,6 +50,16 @@ const { idx, project } = Astro.props;
     <div class="px-4 py-2 grid grid-cols-10 items-center">
         <h1 class="col-start-2 col-end-7">
             {project.title}
+        </h1>
+    </div>
+
+    <div
+        class="absolute top-0 left-0 px-4 py-2 grid grid-cols-10 w-full h-full items-center"
+    >
+        <h1
+            class="hidden col-start-7 col-end-10 sm:block font-mono tracking-[0.5vw] md:tracking-[1vw] opacity-20 text-4xl lg:text-5xl"
+        >
+            {project.date}
         </h1>
     </div>
 </li>
