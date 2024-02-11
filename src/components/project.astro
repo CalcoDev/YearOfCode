@@ -21,9 +21,11 @@ const { idx, project } = Astro.props;
             <h1 class="opacity-20 col-start-1 col-end-2 justify-self-end mr-10">
                 {idx + 1}
             </h1>
-            <h1 class="col-start-2 col-end-7">
-                {project.title}
-            </h1>
+            <div class="col-start-2 col-end-7">
+                <h1 class="w-fit hover:cursor-pointer hover:text-blue-300">
+                    {project.title}
+                </h1>
+            </div>
             <h3
                 class="scroll-m-20 text-2xl font-semibold tracking-tight col-start-7 col-end-10"
             >
