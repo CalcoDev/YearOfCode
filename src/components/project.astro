@@ -6,7 +6,10 @@ const { idx, project } = Astro.props;
     id="project"
     class="py-6 relative text-4xl font-extrabold tracking-tight lg:text-6xl uppercase"
 >
-    <div class="z-30 absolute top-0 left-0 origin-center h-full" id="blaster">
+    <div
+        class="z-30 absolute top-0 left-0 origin-center h-full hidden sm:block"
+        id="blaster"
+    >
         <img
             alt="Gaster blaster shot"
             class="max-h-full h-auto object-contain aspect-auto"
